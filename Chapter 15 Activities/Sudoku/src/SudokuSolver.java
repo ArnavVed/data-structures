@@ -168,7 +168,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "C://Users//pagrawal//Desktop//Software Engineering//data-structures//Chapter 15 Activities//Sudoku//src//puzzle1.txt";
+        String fileName = "C://Users//arvedavyas//Desktop//Software Engineering//data-structures//Chapter 15 Activities//Sudoku//src//puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
