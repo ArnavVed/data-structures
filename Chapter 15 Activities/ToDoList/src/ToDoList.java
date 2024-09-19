@@ -1,5 +1,7 @@
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Queue;
 /**
  * Implement a to do list. Tasks have a priority between 
  * 1 and 9 (with 1 being most urgent), and a description.
@@ -9,20 +11,20 @@ import java.util.Scanner;
  * The quit command quits the program. 
  * Use a priority queue in your solution.
 */
-public class ToDoList
+public class ToDoList 
 {
     // Instance variable(s)
-    . . .
-
+   
+    Queue<Task> TaskList;
     /**
      * Constructor
     */
     public ToDoList()
     {
         // Complete this
-        . . .
+        TaskList = new PriorityQueue<>();
+        
     }
-
     /**
      * Display a menu and accepts commands.
      */
@@ -60,7 +62,23 @@ public class ToDoList
     public void addTask(String optionStr)
     {
         // Complete this method
-        . . .
+        try {
+            String[] parts = optionStr.split(" ", 3);
+            if (parts.length < 3) {
+                throw new IllegalArgumentException("Invalid command format.");
+            }
+            int priority = Integer.parseInt(parts[1]);
+            if (priority < 1 || priority > 9) {
+                throw new IllegalArgumentException("The priority must be an integer between 1 and 9.");
+            }
+            String description = parts[2];
+            TaskList.add(new Task(priority, description));
+            System.out.println("Task added: " + description);
+        } catch (NumberFormatException e) {
+            System.out.println("The priority must be an integer between 1 and 9.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
             
             
     }
@@ -71,17 +89,18 @@ public class ToDoList
     */
     public void nextTask()
     {
-        Task next = null;
+       
         
         // Complete this method
-        . . .
         
         
-        if (next == null)
+        
+        if (TaskList.isEmpty())
         {
             System.out.println("There are no tasks in the list.");
         } else
         {
+            Task next = TaskList.poll();
             System.out.println(next.getDescription());
         }
     }
