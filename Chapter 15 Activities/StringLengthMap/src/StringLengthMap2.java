@@ -10,21 +10,21 @@ import java.io.*;
  */
 public class StringLengthMap2
 {
-    public static void main(String[] args) throws FileNotFoundException
-    {
+    public static void main(String[] args) throws FileNotFoundException {
         String filename = "Chapter 15 Activities//StringLengthMap//src//test1.txt";
 
-        try (Scanner in = new Scanner(new File(filename)))
-        {
-            Map<Integer, String> map = new HashMap<>();
+        try (Scanner in = new Scanner(new File(filename))) {
+            Map<Integer, Set<String>> map = new HashMap<>();
 
-            while (in.hasNext())
-            {
+            while (in.hasNext()) {
                 String word = clean(in.next());
                 Integer len = word.length();
 
-                // Update the map: Append the word to the existing entry, or start a new entry
-                map.merge(len, word, (existingWords, newWord) -> existingWords + ", " + newWord);
+                // Use merge with a Set to prevent duplicates
+                map.merge(len, new HashSet<>(Arrays.asList(word)), (existingWords, newWordSet) -> {
+                    existingWords.addAll(newWordSet);
+                    return existingWords;
+                });
             }
 
             // Sort the map by the length of the words (keys)
@@ -32,17 +32,14 @@ public class StringLengthMap2
             Collections.sort(sortedKeys);
 
             // Print the map in the format: length: word1, word2, word3
-            for (Integer key : sortedKeys)
-            {
-                System.out.println(key + ": " + map.get(key));
+            for (Integer key : sortedKeys) {
+                System.out.println(key + ": " + String.join(", ", map.get(key)));
             }
 
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             System.out.println("Cannot open: " + filename);
         }
     }
-
     /**
      * Clean the word by removing non-letter characters and converting to lowercase.
      */
