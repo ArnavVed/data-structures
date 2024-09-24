@@ -1,57 +1,62 @@
 import java.util.*;
 import java.io.*;
+
 /**
  * Read all words from a file and add them to a
  * map whose keys are word lengths and whose values
  * are comma-separated strings of words of the same length.
  * Then print out those strings, in increasing order by
  * the length of their entries.
- * Use the Java 8 merge() method from Java 8 Note 15.1.
  */
 public class StringLengthMap2
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws FileNotFoundException
     {
-        String filename = "src/test1.txt";
+        String filename = "Chapter 15 Activities//StringLengthMap//src//test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
-
-            // Create your map here
-            
+            Map<Integer, String> map = new HashMap<>();
 
             while (in.hasNext())
             {
                 String word = clean(in.next());
                 Integer len = word.length();
 
-                // Update the map here
-                // Use the Java 8 merge() method
-                
-
-
+                // Update the map: Append the word to the existing entry, or start a new entry
+                map.merge(len, word, (existingWords, newWord) -> existingWords + ", " + newWord);
             }
 
-            // Print the strings, in increasing order of their length
-            // Use this format: 1: i, a, i
+            // Sort the map by the length of the words (keys)
+            List<Integer> sortedKeys = new ArrayList<>(map.keySet());
+            Collections.sort(sortedKeys);
+
+            // Print the map in the format: length: word1, word2, word3
+            for (Integer key : sortedKeys)
+            {
+                System.out.println(key + ": " + map.get(key));
+            }
+
         } catch (FileNotFoundException e)
         {
             System.out.println("Cannot open: " + filename);
         }
     }
 
+    /**
+     * Clean the word by removing non-letter characters and converting to lowercase.
+     */
     public static String clean(String s)
     {
-        String r = "";
+        StringBuilder r = new StringBuilder();
         for (int i = 0; i < s.length(); i++)
         {
             char c = s.charAt(i);
             if (Character.isLetter(c))
             {
-                r = r + c;
+                r.append(c);
             }
         }
-        return r.toLowerCase();
+        return r.toString().toLowerCase();
     }
-
 }
