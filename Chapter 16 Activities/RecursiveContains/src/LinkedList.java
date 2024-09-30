@@ -41,9 +41,11 @@ public class LinkedList
     */
     public boolean contains(Object obj)
     {
-        // ...
+        return contains(first, obj);
     }
 
+
+    
     /**
         Checks if the given node or any in its following nodes contains the given object.
         @param obj The object to be checked for.
@@ -51,7 +53,17 @@ public class LinkedList
     */
     public static boolean contains(Node start, Object obj)
     {
-        // ...
+        if (start == null){
+            return false;
+        }
+
+        if (start.data.equals(obj)) {
+            return true;
+
+        }
+
+        return contains(start.next, obj); 
+
     }
 
     /**
