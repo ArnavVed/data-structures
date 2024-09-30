@@ -26,9 +26,20 @@ public class LinkedList
     */
     public int size()
     {
-        . . .
+        return size(first);
     }
 
+
+    private static int size(Node start)
+    {
+        if (start == null) {
+            return 0; 
+        }
+        else{
+            return 1 + size(start.next);
+        }
+         
+    }
 
     /**
         Returns the first element in the linked list.
