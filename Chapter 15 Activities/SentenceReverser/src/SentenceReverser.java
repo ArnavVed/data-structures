@@ -21,7 +21,12 @@ public class SentenceReverser
         
 
         while(scanner.hasNext()){
-            Reverses.add(scanner.next());
+            String striptext = (scanner.next())
+            if(striptext.charAt(striptext.length()-1).equals('.')){
+                Reverses.add(striptext);
+            }
+            
+            
 
         }
         System.out.println(Reverses);
