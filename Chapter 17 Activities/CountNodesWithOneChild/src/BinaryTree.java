@@ -102,4 +102,31 @@ public class BinaryTree
         result.root = root.right;
         return result;
     }
+
+
+    public int countNodesWithOneChild()
+    {
+        return countNodesWithOneChild(root);
+    }
+
+    private int countNodesWithOneChild(Node node)
+    {
+        if (node == null) {
+            return 0;
+        }
+        
+        int count = 0;
+        
+        // Check if the node has exactly one child
+        if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
+            count = 1;
+        }
+        
+        // Recursively count for left and right subtrees
+        count += countNodesWithOneChild(node.left);
+        count += countNodesWithOneChild(node.right);
+        
+        return count;
+    }
+    
 }

@@ -1,9 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
+
 /**
     A tree in which each node has an arbitrary number of children.
-    Modify the Tree class from Section 16.1 (below) to add
-    a method that counts the number of leaves in the tree.
+    Modified Tree class to add a method that counts the number of leaves in the tree.
 */
 public class Tree
 {
@@ -23,6 +23,22 @@ public class Tree
             int sum = 0;
             for (Node child : children) { sum = sum + child.size(); }
             return 1 + sum;
+        }
+
+        /**
+            Counts the leaves in the subtree whose root is this node.
+            @return the number of leaf nodes in the subtree
+        */
+        public int countLeaves()
+        {
+            if (children.isEmpty()) { // This node is a leaf
+                return 1;
+            }
+            int leafCount = 0;
+            for (Node child : children) {
+                leafCount += child.countLeaves();
+            }
+            return leafCount;
         }
     }
 
@@ -63,5 +79,16 @@ public class Tree
         else { return root.size(); }
     }
 
-    // Additional methods will be added in later sections.
+    /**
+        Counts the number of leaves in this tree.
+        @return the number of leaves in the tree
+    */
+    public int leafCount()
+    {
+        if (root == null) {
+            return 0;
+        } else {
+            return root.countLeaves();
+        }
+    }
 }
